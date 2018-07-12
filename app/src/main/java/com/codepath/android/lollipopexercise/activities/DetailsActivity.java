@@ -1,6 +1,9 @@
 package com.codepath.android.lollipopexercise.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Contact mContact;
     private ImageView ivProfile;
     private TextView tvName;
+    private FloatingActionButton fab;
     private TextView tvPhone;
     private View vPalette;
 
@@ -28,6 +32,8 @@ public class DetailsActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvPhone = (TextView) findViewById(R.id.tvPhone);
         vPalette = findViewById(R.id.vPalette);
+        //extract FAB
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // Extract contact from bundle
         mContact = (Contact)getIntent().getExtras().getSerializable(EXTRA_CONTACT);
@@ -36,6 +42,19 @@ public class DetailsActivity extends AppCompatActivity {
         Glide.with(DetailsActivity.this).load(mContact.getThumbnailDrawable()).centerCrop().into(ivProfile);
         tvName.setText(mContact.getName());
         tvPhone.setText(mContact.getNumber());
+
+
+        // Dial contact's number.
+        // This shows the dialer with the number, allowing you to explicitly initiate the call.
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = "tel:" + mContact.getNumber();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

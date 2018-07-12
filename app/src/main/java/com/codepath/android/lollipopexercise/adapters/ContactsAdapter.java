@@ -77,8 +77,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                         // Fire an intent when a contact is selected
                         // Pass contact object in the bundle and populate details activity.
                         Intent intent = new Intent(mContext, DetailsActivity.class);
-
-                        
+                        intent.putExtra(EXTRA_CONTACT, contact);
 //                        mContext.startActivity(intent);
 
                         Pair<View, String> p1 = Pair.create((View)ivProfile, "profile");
