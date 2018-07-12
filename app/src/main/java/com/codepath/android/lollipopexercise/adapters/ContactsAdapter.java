@@ -3,6 +3,8 @@ package com.codepath.android.lollipopexercise.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,8 +77,17 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                         // Fire an intent when a contact is selected
                         // Pass contact object in the bundle and populate details activity.
                         Intent intent = new Intent(mContext, DetailsActivity.class);
-                        intent.putExtra(EXTRA_CONTACT, contact);
-                        mContext.startActivity(intent);
+
+                        
+//                        mContext.startActivity(intent);
+
+                        Pair<View, String> p1 = Pair.create((View)ivProfile, "profile");
+                        Pair<View, String> p2 = Pair.create(vPalette, "palette");
+                        Pair<View, String> p3 = Pair.create((View)tvName, "name");
+
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation(mContext, p1, p2, p3);
+                        mContext.startActivity(intent, options.toBundle());
                     }
                 }
             });
